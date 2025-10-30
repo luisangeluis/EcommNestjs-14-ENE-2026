@@ -3,7 +3,7 @@
   "setupTasks": [
     {
       "name": "Install Dependencies",
-      "command": "pnpm install"
+      "command": "npm install"
     }
   ],
 
@@ -11,26 +11,26 @@
   "tasks": {
     "dev": {
       "name": "Start Dev Server",
-      "command": "pnpm run start:dev",
+      "command": "npm run start:dev",
       "runAtStart": true,
       "preview": {
         "port": 3000
       },
       "restartOn": {
-        "files": ["./pnpm-lock.yaml"]
+        "files": ["./package-lock.json"]
       }
     },
     "start-app": {
       "name": "Start App",
-      "command": "pnpm run start"
+      "command": "npm run start"
     },
     "start-prod": {
       "name": "Start Production",
-      "command": "pnpm run start:prod"
+      "command": "npm run start:prod"
     },
     "build": {
       "name": "Build",
-      "command": "pnpm run build",
+      "command": "npm run build",
       "runAtStart": false
     },
     "lint": {
@@ -40,22 +40,22 @@
     },
     "test": {
       "name": "Run Tests",
-      "command": "pnpm run test",
+      "command": "npm run test",
       "runAtStart": false
     },
     "test-watch": {
       "name": "Run Tests in Watch Mode",
-      "command": "pnpm run test:watch",
+      "command": "npm run test:watch",
       "runAtStart": false
     },
     "test-e2e": {
       "name": "Run E2E Tests",
-      "command": "pnpm run test:e2e",
+      "command": "npm run test:e2e",
       "runAtStart": false
     },
     "install": {
       "name": "Install Dependencies",
-      "command": "pnpm install",
+      "command": "npm install",
       "restartOn": {
         "files": ["./package.json"]
       }
