@@ -26,11 +26,11 @@ export default class User extends Model<
   UserAttributes,
   UserCreationAttributes
 > {
+  @PrimaryKey
   @Default(DataType.UUIDV4)
   @Column({
     type: DataType.UUID,
   })
-  @PrimaryKey
   id!: string;
 
   @AllowNull(false)
