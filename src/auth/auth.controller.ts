@@ -14,8 +14,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post()
-  async register() {}
+  async login() {
+    //validate
+  }
 
   @Post()
-  async login() {}
+  async register() {}
 }

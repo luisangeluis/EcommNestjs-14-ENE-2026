@@ -8,6 +8,7 @@ import {
   IsEmail,
   Default,
   DataType,
+  Unique,
 } from 'sequelize-typescript';
 
 interface UserAttributes {
@@ -43,6 +44,7 @@ export default class User extends Model<
 
   @AllowNull(false)
   @IsEmail
+  @Unique
   @Column
   email!: string;
 
