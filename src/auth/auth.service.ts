@@ -5,5 +5,7 @@ import { UsersService } from 'src/users/users.service';
 export class AuthService {
   constructor(private readonly usersService: UsersService) {}
 
-  async login(email: string, password: string) {}
+  async login(email: string, password: string) {
+    const user = await 
+  }
 }
