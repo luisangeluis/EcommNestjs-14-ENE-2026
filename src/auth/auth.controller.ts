@@ -5,16 +5,11 @@ import { UsersService } from 'src/users/users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly usersService: UsersService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Post()
+  @Post('login')
   async login(@Body() login: LoginDto) {
-    const { email, password } = login;
-    const user = await this.usersService.findByEmail(email);
-    //validate
+    return this.authService.login(login);
   }
 
   @Post()

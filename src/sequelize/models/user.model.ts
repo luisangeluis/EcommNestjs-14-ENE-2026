@@ -11,7 +11,7 @@ import {
   Unique,
 } from 'sequelize-typescript';
 
-interface UserAttributes {
+export interface UserAttributes {
   id: string;
   firstName: string;
   lastName: string;
@@ -20,7 +20,8 @@ interface UserAttributes {
   isActive: boolean;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+export interface UserCreationAttributes
+  extends Optional<UserAttributes, 'id'> {}
 
 @Table
 export default class User extends Model<
