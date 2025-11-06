@@ -7,12 +7,14 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersModule } from './users/users.module';
 import { Sequelize } from 'sequelize-typescript';
 import { AuthModule } from './auth/auth.module';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.dev.env',
+      load: [configuration],
     }),
     SequelizeModule.forRootAsync({
       imports: [ConfigModule],
