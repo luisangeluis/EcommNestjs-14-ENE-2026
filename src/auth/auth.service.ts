@@ -17,6 +17,6 @@ export class AuthService {
     const token = { token: 'your-token' };
     const { password, ...safeUser } = user;
 
-    return { user, safeUser, accessToken: token };
+    return { user: safeUser, token };
   }
 }
