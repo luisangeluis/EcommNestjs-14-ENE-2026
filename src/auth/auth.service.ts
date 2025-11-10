@@ -25,9 +25,10 @@ export class AuthService {
 
     const payload = { sub: user.id, email: user.email };
 
+    const { password, ...safeUser } = user;
     const token = await this.jwtService.signAsync(payload);
 
-    return { userId: user.id, token };
+    return { user: safeUser, token };
   }
 
   async register(createUser: CreateUserDto) {
@@ -35,8 +36,9 @@ export class AuthService {
 
     if (userExists) throw new BadRequestException('User already exists');
 
-    const user = await this.usersService.create(createUser);
+    const { password, ...safeUser } =
+      await this.usersService.create(createUser);
 
-    return { userId: user.id };
+    return { user: safeUser };
   }
 }
