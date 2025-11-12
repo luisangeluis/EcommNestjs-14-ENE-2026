@@ -18,16 +18,17 @@ async function bootstrap() {
   //SEQUELIZE
   const sequelize = app.get(Sequelize);
   const isDev = process.env.NODE_ENV !== 'production';
-  await sequelize.sync({ force: isDev });
+  await sequelize.sync({ alter: isDev });
 
   //SWAGGER
   const config = new DocumentBuilder()
     .setTitle('Ecommerce Nest')
     .setDescription('Ecommerce with Nestjs')
     .setVersion('1.0')
-    // .addTag('cats')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup('api', app, documentFactory);
 
   await app.listen(3000);
