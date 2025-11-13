@@ -7,6 +7,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UsersModule } from './users/users.module';
 import { Sequelize } from 'sequelize-typescript';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -23,6 +24,7 @@ import configuration from './config/configuration';
     }),
     UsersModule,
     AuthModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
