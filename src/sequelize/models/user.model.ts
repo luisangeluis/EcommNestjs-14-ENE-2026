@@ -9,7 +9,9 @@ import {
   Default,
   DataType,
   Unique,
+  HasMany,
 } from 'sequelize-typescript';
+import Product from './product.model';
 
 export interface UserAttributes {
   id: string;
@@ -57,4 +59,7 @@ export default class User extends Model<
   @Default(true)
   @Column
   isActive: boolean;
+
+  @HasMany(() => Product)
+  products: Product[];
 }

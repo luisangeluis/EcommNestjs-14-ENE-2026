@@ -1,20 +1,23 @@
 import { Optional } from 'sequelize';
 import {
   AllowNull,
+  BelongsTo,
   Column,
   DataType,
   Default,
+  ForeignKey,
   Model,
   NotNull,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+import User from './user.model';
 
 export interface ProductAttributes {
   id: string;
   title: string;
   description?: string;
-  price: string;
+  price: number;
   userId: string;
 }
 
@@ -22,7 +25,7 @@ export interface ProductCreationAttributes
   extends Optional<ProductAttributes, 'id'> {}
 
 @Table
-export default class Produc extends Model<
+export default class Product extends Model<
   ProductAttributes,
   ProductCreationAttributes
 > {
@@ -39,13 +42,20 @@ export default class Produc extends Model<
 
   @AllowNull(true)
   @Column
-  description!: string;
+  description?: string;
 
   @AllowNull(false)
-  @Column
-  price!: string;
+  @Column({
+    type: DataType.DECIMAL,
+  })
+  price!: number;
 
-  @AllowNull(false)
-  @Column
+  @ForeignKey(() => User)
+  @Column({
+    type: DataType.UUID,
+  })
   userId!: string;
+
+  @BelongsTo(() => User)
+  user: User;
 }
