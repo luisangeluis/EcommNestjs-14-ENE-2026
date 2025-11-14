@@ -14,8 +14,22 @@ export class ProductsService {
     return 'This action adds a new product';
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll(page: number = 1) {
+    const limit = 20;
+    const offset = (page - 1) * limit;
+    const { rows, count } = await this.productModel.findAndCountAll({
+      limit,
+      offset,
+      order: [['createdAt', 'DESC']], // optioal
+    });
+
+    return {
+      total: count,
+      page,
+      limit,
+      totalPages: Math.ceil(count / limit),
+      data: rows,
+    };
   }
 
   findOne(id: number) {
