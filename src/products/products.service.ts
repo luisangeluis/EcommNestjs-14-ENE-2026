@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import Product from 'src/sequelize/models/product.model';
+import Product from 'src/database/models/product.model';
 
 @Injectable()
 export class ProductsService {

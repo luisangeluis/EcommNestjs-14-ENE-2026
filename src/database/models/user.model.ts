@@ -55,7 +55,6 @@ export default class User extends Model<
   @Column
   password!: string;
 
-  @AllowNull(false)
   @Default(true)
   @Column
   isActive: boolean;
