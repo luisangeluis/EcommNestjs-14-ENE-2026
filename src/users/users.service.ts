@@ -14,8 +14,8 @@ export class UsersService {
     return user;
   }
 
-  findAll() {
-    return `This action returns user`;
+  async findAll() {
+    return await this.userModel.findAll();
   }
 
   async findOne(id: string) {
