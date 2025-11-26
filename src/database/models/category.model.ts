@@ -6,6 +6,7 @@ import {
   Default,
   Model,
   PrimaryKey,
+  Table,
 } from 'sequelize-typescript';
 
 export interface CategoryAttributes {
@@ -16,6 +17,7 @@ export interface CategoryAttributes {
 export interface CategoryCreationAttributes
   extends Optional<CategoryAttributes, 'id'> {}
 
+@Table
 export default class Category extends Model<
   CategoryAttributes,
   CategoryCreationAttributes
