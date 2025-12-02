@@ -3,6 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import Product from 'src/database/models/product.model';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class ProductsService {
@@ -14,10 +15,20 @@ export class ProductsService {
     return 'This action adds a new product';
   }
 
-  async findAll(page: number = 1) {
+  async findAll(page: number = 1, search?: string) {
     const limit = 20;
     const offset = (page - 1) * limit;
+    const where: any = {};
+
+    if (search) {
+      where[Op.or] = [
+        { title: { [Op.like]: `%${search}%` } },
+        { description: { [Op.like]: `%${search}%` } },
+      ];
+    }
+
     const { rows, count } = await this.productModel.findAndCountAll({
+      where,
       limit,
       offset,
       order: [['createdAt', 'DESC']], // optioal

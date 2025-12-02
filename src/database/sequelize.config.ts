@@ -11,7 +11,7 @@ export const getSequelizeConfig = async (
     username: config.get<string>('DB_USER') || 'root',
     password: config.get<string>('DB_PASS') || '',
     database: config.get<string>('DB_NAME') || 'testdb',
-    autoLoadModels: false,
+    autoLoadModels: true,
     synchronize: false,
     // logging: true,
   };
