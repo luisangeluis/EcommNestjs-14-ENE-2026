@@ -17,10 +17,10 @@ export class ProductsService {
 
   async findAll(page: number = 1, search?: string) {
     const limit = 20;
-    const offset = (page - 1) * limit;
+    const offset = ((page > 0 ? page : 1) - 1) * limit;
     const where: any = {};
 
-    if (search) {
+    if (search && search.trim() !== '') {
       where[Op.or] = [
         { title: { [Op.like]: `%${search}%` } },
         { description: { [Op.like]: `%${search}%` } },
@@ -36,7 +36,7 @@ export class ProductsService {
 
     return {
       total: count,
-      page,
+      page: page > 0 ? page : 1,
       limit,
       totalPages: Math.ceil(count / limit),
       data: rows,

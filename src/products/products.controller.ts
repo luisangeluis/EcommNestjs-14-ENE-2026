@@ -12,6 +12,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { FindProductsQueryDto } from './dto/find-products-query.dto';
 
 @ApiTags('Products')
 @Controller('products')
@@ -24,10 +25,10 @@ export class ProductsController {
   }
 
   @Get()
-  findAll(@Query('page') page: number, @Query('search') search?: string) {
-    const pageNumber = page ? Number(page) : 1;
+  findAll(@Query() query: FindProductsQueryDto) {
+    const page = query.page ? Number(query.page) : 1;
 
-    return this.productsService.findAll(Number(pageNumber), search);
+    return this.productsService.findAll(Number(page), query.search);
   }
 
   @Get(':id')
