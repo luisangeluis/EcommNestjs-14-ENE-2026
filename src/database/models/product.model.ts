@@ -2,6 +2,7 @@ import { Optional } from 'sequelize';
 import {
   AllowNull,
   BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   Default,
@@ -12,6 +13,8 @@ import {
   Table,
 } from 'sequelize-typescript';
 import User from './user.model';
+import Category from './category.model';
+import ProductCategory from './product-category.model';
 
 export interface ProductAttributes {
   id: string;
@@ -58,4 +61,7 @@ export default class Product extends Model<
 
   @BelongsTo(() => User)
   user: User;
+
+  @BelongsToMany(() => Category, () => ProductCategory)
+  categories!: Category[];
 }

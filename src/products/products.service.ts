@@ -17,7 +17,8 @@ export class ProductsService {
 
   async findAll(page: number = 1, search?: string) {
     const limit = 20;
-    const offset = ((page > 0 ? page : 1) - 1) * limit;
+    const currentPage = page > 0 ? page : 1;
+    const offset = (currentPage - 1) * limit;
     const where: any = {};
 
     if (search && search.trim() !== '') {
@@ -36,7 +37,7 @@ export class ProductsService {
 
     return {
       total: count,
-      page: page > 0 ? page : 1,
+      page: currentPage,
       limit,
       totalPages: Math.ceil(count / limit),
       data: rows,
