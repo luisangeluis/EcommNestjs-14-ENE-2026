@@ -4,6 +4,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import Product from 'src/database/models/product.model';
 import { Op } from 'sequelize';
+import { Pagination } from 'src/common/utils/pagination.util';
 
 @Injectable()
 export class ProductsService {
@@ -28,10 +29,8 @@ export class ProductsService {
     });
   }
 
-  async findAll(page: number = 1, search?: string) {
-    const limit = 20;
-    const currentPage = page > 0 ? page : 1;
-    const offset = (currentPage - 1) * limit;
+  async findAll(page: number = 1, search?: string, limit: number = 20) {
+    const pagination = new Pagination(limit, page);
     const where: any = {};
 
     if (search && search.trim() !== '') {
@@ -42,19 +41,13 @@ export class ProductsService {
     }
 
     const { rows, count } = await this.productModel.findAndCountAll({
+      ...pagination.options,
       where,
-      limit,
-      offset,
       order: [['createdAt', 'DESC']], // optioal
+      include: ['categories'],
     });
 
-    return {
-      total: count,
-      page: currentPage,
-      limit,
-      totalPages: Math.ceil(count / limit),
-      data: rows,
-    };
+    return pagination.response(rows, count);
   }
 
   async findMeAll(userId: string) {

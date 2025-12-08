@@ -1,11 +1,34 @@
 export class Pagination {
-  private readonly limit = 20;
-  constructor(
-    private page = 1,
-    search,
-  ) {}
+  readonly limit?: number;
+  readonly page?: number;
 
-  async paginate() {
-    this.page;
+  constructor(limit: number, page: number) {
+    this.limit = limit > 0 && limit < 50 ? limit : 20;
+    this.page = page > 0 ? page : 1;
+  }
+
+  get offset() {
+    return (this.page - 1) * this.limit;
+  }
+
+  get options() {
+    return {
+      offset: this.offset,
+      limit: this.limit,
+    };
+  }
+
+  response(data: any[], total: number) {
+    const totalPages = Math.ceil(total / this.limit);
+
+    return {
+      data,
+      page: this.page,
+      limit: this.limit,
+      total,
+      totalPages,
+      hasPrevPage: this.page > 1,
+      hasNextPage: this.page < totalPages,
+    };
   }
 }

@@ -36,8 +36,12 @@ export class ProductsController {
   @Get()
   async findAll(@Query() query: FindProductsQueryDto) {
     const page = query.page ? Number(query.page) : 1;
-
-    return await this.productsService.findAll(Number(page), query.search);
+    const limit = 20;
+    return await this.productsService.findAll(
+      Number(page),
+      query.search,
+      limit,
+    );
   }
 
   @UseGuards(JwtAuthGuard)
@@ -48,16 +52,16 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+    return this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+    return this.productsService.remove(id);
   }
 }
