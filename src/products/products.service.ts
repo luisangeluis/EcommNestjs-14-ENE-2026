@@ -11,7 +11,7 @@ export class ProductsService {
     @InjectModel(Product) private readonly productModel: typeof Product,
   ) {}
 
-  create(createProductDto: CreateProductDto) {
+  create(createProductDto: CreateProductDto, userId: string) {
     return 'This action adds a new product';
   }
 

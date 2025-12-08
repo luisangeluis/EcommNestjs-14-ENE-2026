@@ -16,8 +16,8 @@ async function bootstrap() {
   );
 
   //SEQUELIZE
-  const sequelize = app.get(Sequelize);
-  const isDev = process.env.NODE_ENV !== 'production';
+  // const sequelize = app.get(Sequelize);
+  // const isDev = process.env.NODE_ENV !== 'production';
 
   //SWAGGER
   const config = new DocumentBuilder()
