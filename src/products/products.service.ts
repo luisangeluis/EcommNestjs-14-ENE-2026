@@ -12,9 +12,19 @@ export class ProductsService {
   ) {}
 
   async create(createProductDto: CreateProductDto, userId: string) {
-    const newProduct = await this.productModel.create({
-      ...createProductDto,
+    const { categoryIds, ...productData } = createProductDto;
+
+    const product = await this.productModel.create({
+      ...productData,
       userId,
+    });
+
+    if (categoryIds?.length) {
+      await product.$set('categories', categoryIds);
+    }
+
+    return await this.productModel.findByPk(product.id, {
+      include: ['categories'],
     });
   }
 
@@ -47,15 +57,19 @@ export class ProductsService {
     };
   }
 
-  findOne(id: number) {
+  async findMeAll(userId: string) {
+    return await `return all products with userId ${userId}`;
+  }
+
+  findOne(id: string) {
     return `This action returns a #${id} product`;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  update(id: string, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} product`;
   }
 }

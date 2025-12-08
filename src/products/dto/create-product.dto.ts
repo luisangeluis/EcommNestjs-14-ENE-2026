@@ -1,8 +1,9 @@
 import {
+  IsArray,
   IsNotEmpty,
   IsNumber,
-  IsNumberString,
   IsOptional,
+  IsString,
   MaxLength,
   Min,
 } from 'class-validator';
@@ -19,4 +20,8 @@ export class CreateProductDto {
   @IsNumber()
   @IsNotEmpty()
   price!: number;
+
+  @IsArray()
+  @IsString({ each: true })
+  categoryIds!: string[];
 }
