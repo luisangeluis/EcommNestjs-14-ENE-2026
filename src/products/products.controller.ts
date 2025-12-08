@@ -41,7 +41,7 @@ export class ProductsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('me/products')
+  @Get('me')
   async findMeAll(@Req() req) {
     return await this.productsService.findMeAll(req.user);
   }
