@@ -11,8 +11,11 @@ export class ProductsService {
     @InjectModel(Product) private readonly productModel: typeof Product,
   ) {}
 
-  create(createProductDto: CreateProductDto, userId: string) {
-    return 'This action adds a new product';
+  async create(createProductDto: CreateProductDto, userId: string) {
+    const newProduct = await this.productModel.create({
+      ...createProductDto,
+      userId,
+    });
   }
 
   async findAll(page: number = 1, search?: string) {
