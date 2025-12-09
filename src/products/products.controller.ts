@@ -47,10 +47,12 @@ export class ProductsController {
     );
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  async findMeAll(@Req() req) {
-    return await this.productsService.findMeAll(req.user);
+  async findMyProducts(@Req() req) {
+    const userId = req.user.id;
+    return await this.productsService.findMyProducts(userId);
   }
 
   @Get(':id')
@@ -63,8 +65,12 @@ export class ProductsController {
     return this.productsService.update(id, updateProductDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(id);
+  remove(@Param('id') id: string, @Req() req) {
+    const userId = req.user.id;
+    //TODO Custom response
+    return this.productsService.remove(userId, id);
   }
 }

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  ArrayMinSize,
   IsArray,
   IsNotEmpty,
   IsNumber,
@@ -38,6 +39,7 @@ export class CreateProductDto {
     example: ['categoryId', 'anotherCategoryId'],
     description: 'Category id',
   })
+  @ArrayMinSize(1)
   @IsArray()
   @IsString({ each: true })
   categoryIds!: string[];

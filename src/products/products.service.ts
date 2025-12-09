@@ -52,8 +52,8 @@ export class ProductsService {
     return pagination.response(rows, count);
   }
 
-  async findMeAll(userId: string) {
-    return await `return all products with userId ${userId}`;
+  async findMyProducts(userId: string) {
+    return await this.productModel.findAll({ where: { userId } });
   }
 
   findOne(id: string) {
@@ -64,7 +64,9 @@ export class ProductsService {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} product`;
+  async remove(userId: string, productId: string) {
+    return await this.productModel.destroy({
+      where: { userId, id: productId },
+    });
   }
 }
