@@ -28,10 +28,12 @@ export class ProductsController {
   @Post()
   async create(
     @Body() createProductDto: CreateProductDto,
-    @Body('categoryIds', CategoriesExistPipe) _categoryIds: string[],
+    @Body('categoryIds', CategoriesExistPipe) categoryIds: string[],
     @Req() req,
   ) {
-    return await this.productsService.create(createProductDto, req.user);
+    const userId = req.user.id;
+
+    return await this.productsService.create(createProductDto, userId);
   }
 
   @Get()

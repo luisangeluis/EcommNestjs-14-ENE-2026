@@ -19,7 +19,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     if (!user) throw new UnauthorizedException('Invalid token');
 
-    const { password, ...safeUser } = user;
+    const plainUser = user.get({ plain: true });
+
+    const { password, ...safeUser } = plainUser;
 
     return safeUser;
   }
