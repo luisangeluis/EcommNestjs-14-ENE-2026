@@ -11,7 +11,7 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FindProductsQueryDto } from './dto/find-products-query.dto';
 import { Req } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common';
@@ -23,11 +23,12 @@ import { CategoriesExistPipe } from 'src/categories/pipes/categories-exist.pipe'
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
     @Body() createProductDto: CreateProductDto,
-    @Body('categoryIds', CategoriesExistPipe) categoryIds: string[],
+    @Body('categoryIds', CategoriesExistPipe) _categoryIds: string[],
     @Req() req,
   ) {
     return await this.productsService.create(createProductDto, req.user);
