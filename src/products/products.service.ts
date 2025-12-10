@@ -27,7 +27,13 @@ export class ProductsService {
     }
 
     return await this.productModel.findByPk(product.id, {
-      include: ['categories'],
+      include: [
+        {
+          association: 'categories',
+          attributes: ['name'],
+          through: { attributes: [] },
+        },
+      ],
     });
   }
 
