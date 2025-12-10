@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -62,12 +62,20 @@ export class ProductsService {
     return await this.productModel.findAll({ where: { userId } });
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    return await this.productModel.findByPk(id);
   }
 
-  update(id: string, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, updateProductDto: UpdateProductDto, userId: string) {
+    const product = await this.productModel.findOne({ where: { id, userId } });
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    await product.update(updateProductDto);
+
+    return product;
   }
 
   async remove(userId: string, productId: string) {
