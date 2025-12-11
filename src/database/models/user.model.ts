@@ -10,8 +10,10 @@ import {
   DataType,
   Unique,
   HasMany,
+  HasOne,
 } from 'sequelize-typescript';
 import Product from './product.model';
+import Cart from './cart.model';
 
 export interface UserAttributes {
   id: string;
@@ -61,4 +63,7 @@ export default class User extends Model<
 
   @HasMany(() => Product)
   products: Product[];
+
+  @HasOne(() => Cart)
+  cart: Cart;
 }
