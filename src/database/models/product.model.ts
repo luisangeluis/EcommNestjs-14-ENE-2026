@@ -7,14 +7,16 @@ import {
   DataType,
   Default,
   ForeignKey,
+  HasMany,
   Model,
-  NotNull,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 import User from './user.model';
 import Category from './category.model';
 import ProductCategory from './product-category.model';
+import CartItem from './cartItem.model';
+import Cart from './cart.model';
 
 export interface ProductAttributes {
   id: string;
@@ -64,4 +66,7 @@ export default class Product extends Model<
 
   @BelongsToMany(() => Category, () => ProductCategory)
   categories!: Category[];
+
+  @HasMany(() => CartItem)
+  cartItems!: CartItem[];
 }

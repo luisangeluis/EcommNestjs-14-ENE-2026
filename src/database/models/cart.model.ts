@@ -6,11 +6,13 @@ import {
   DataType,
   Default,
   ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 import User from './user.model';
+import CartItem from './cartItem.model';
 
 export interface CartAttributes {
   id: string;
@@ -46,4 +48,7 @@ export default class Cart extends Model<
 
   @BelongsTo(() => User)
   user: User;
+
+  @HasMany(() => CartItem)
+  cartItem: CartItem;
 }
