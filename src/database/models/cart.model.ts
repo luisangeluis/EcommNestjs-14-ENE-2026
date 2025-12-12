@@ -8,6 +8,7 @@ import {
   ForeignKey,
   Model,
   PrimaryKey,
+  Table,
 } from 'sequelize-typescript';
 import User from './user.model';
 
@@ -20,6 +21,7 @@ export interface CartAttributes {
 export interface CartCreationAttributes
   extends Optional<CartAttributes, 'id'> {}
 
+@Table
 export default class Cart extends Model<
   CartAttributes,
   CartCreationAttributes

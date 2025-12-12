@@ -3,9 +3,10 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import User from 'src/database/models/user.model';
+import Cart from 'src/database/models/cart.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([User])],
+  imports: [SequelizeModule.forFeature([User, Cart])],
   exports: [UsersService],
   controllers: [UsersController],
   providers: [UsersService],
