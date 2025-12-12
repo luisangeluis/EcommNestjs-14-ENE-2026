@@ -24,7 +24,7 @@ export class CartController {
   addItem(
     @Body() addItemDto: AddItemDto,
     @Request() req,
-    @Body('productId', ProductIdExistsPipe) productId: string[],
+    @Body('productId', ProductExistsPipe) productId: string[],
   ) {
     const userId = req.user.id;
     return await this.cartService.addItem(userId);
