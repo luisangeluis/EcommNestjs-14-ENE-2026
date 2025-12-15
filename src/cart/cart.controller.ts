@@ -28,7 +28,7 @@ export class CartController {
     @Request() req,
   ) {
     const userId = req.user.id;
-    return await this.cartService.addItem(userId);
+    return await this.cartService.addItem(userId, addItemDto);
   }
 
   @Post()

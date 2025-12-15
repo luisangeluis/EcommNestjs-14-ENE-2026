@@ -21,8 +21,10 @@ export interface CartItemAttributes {
   subtotal: number;
 }
 
-export interface CartItemCreationAttributes
-  extends Optional<CartItemAttributes, 'id'> {}
+export interface CartItemCreationAttributes extends Optional<
+  CartItemAttributes,
+  'id'
+> {}
 
 @Table
 export default class CartItem extends Model<
@@ -56,11 +58,11 @@ export default class CartItem extends Model<
   })
   quantity!: number;
 
-  @AllowNull(false)
-  @Column({
-    type: DataType.DECIMAL(10, 2),
-  })
-  subtotal!: number;
+  // @AllowNull(false)
+  // @Column({
+  //   type: DataType.DECIMAL(10, 2),
+  // })
+  // subtotal!: number;
 
   @BelongsTo(() => Cart)
   cart: Cart;
