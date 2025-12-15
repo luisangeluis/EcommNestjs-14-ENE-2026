@@ -14,6 +14,7 @@ import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { AddItemDto } from './dto/add-item.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
+import { ProductExistsPipe } from 'src/products/pipes/product-exists.pipe';
 
 @Controller('cart')
 export class CartController {
@@ -21,10 +22,10 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  addItem(
+  async addItem(
     @Body() addItemDto: AddItemDto,
+    @Body('productId', ProductExistsPipe) productId: string,
     @Request() req,
-    @Body('productId', ProductExistsPipe) productId: string[],
   ) {
     const userId = req.user.id;
     return await this.cartService.addItem(userId);
