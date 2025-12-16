@@ -21,7 +21,7 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post()
+  @Post('add-item')
   async addItem(
     @Body() addItemDto: AddItemDto,
     @Body('productId', ProductExistsPipe) productId: string,
@@ -31,21 +31,17 @@ export class CartController {
     return await this.cartService.addItem(userId, addItemDto);
   }
 
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  findOne(@Request() req) {
+    const userId = req.user.id;
+    return this.cartService.findOneByUserId(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  @Delete('remove-item')
+  removeItem(@Param('cartItemId') cartItemId: string, @Request() req) {
+    const userId = req.user.id;
+    return this.cartService.removeItem(userId, cartItemId);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
-  }
-
-  @Post()
-  async addToCart() {}
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -38,19 +38,27 @@ export class CartService {
     });
   }
 
-  create(createCartDto: CreateCartDto) {
-    return 'This action adds a new cart';
+  async findOneByUserId(userId: string) {
+    const [cart] = await this.cartModel.findOrCreate({
+      where: { userId },
+      defaults: { userId },
+    });
+
+    return cart;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cart`;
-  }
+  async removeItem(userId: string, cartItemId: string) {
+    const cartItem = await this.cartItemModel.findOne({
+      where: { id: cartItemId },
+      include: [{ model: Cart, where: { userId } }],
+    });
 
-  update(id: number, updateCartDto: UpdateCartDto) {
-    return `This action updates a #${id} cart`;
-  }
+    if (!cartItem) {
+      throw new NotFoundException('Item not found in your cart');
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} cart`;
+    cartItem.destroy();
+
+    return { message: 'Item removed from cart' };
   }
 }
