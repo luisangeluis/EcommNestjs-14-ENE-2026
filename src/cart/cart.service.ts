@@ -61,4 +61,16 @@ export class CartService {
 
     return { message: 'Item removed from cart' };
   }
+
+  async cleanCart(userId: string) {
+    const cart = await this.cartModel.findOne({
+      where: { userId },
+    });
+
+    if (!cart) return 0;
+
+    return await this.cartItemModel.destroy({
+      where: { cartId: cart.id },
+    });
+  }
 }

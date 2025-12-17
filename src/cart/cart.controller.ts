@@ -32,16 +32,23 @@ export class CartController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('me')
-  findOne(@Request() req) {
+  @Get()
+  async findOne(@Request() req) {
     const userId = req.user.id;
-    return this.cartService.findOneByUserId(userId);
+    return await this.cartService.findOneByUserId(userId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('remove-item')
-  removeItem(@Param('cartItemId') cartItemId: string, @Request() req) {
+  async removeItem(@Param('cartItemId') cartItemId: string, @Request() req) {
     const userId = req.user.id;
-    return this.cartService.removeItem(userId, cartItemId);
+    return await this.cartService.removeItem(userId, cartItemId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  async cleanCart(@Request() req) {
+    const userId = req.user.id;
+
+    return await this.cartService.cleanCart(userId);
   }
 }
