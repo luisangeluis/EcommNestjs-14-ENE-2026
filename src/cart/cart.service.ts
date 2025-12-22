@@ -47,7 +47,7 @@ export class CartService {
       include: [
         {
           model: CartItem,
-          attributes: ['quantity'],
+          attributes: ['id', 'quantity'],
           include: [
             {
               model: Product,
@@ -76,6 +76,7 @@ export class CartService {
     return { message: 'Item removed from cart' };
   }
 
+  //
   async cleanCart(userId: string) {
     const cart = await this.cartModel.findOne({
       where: { userId },
