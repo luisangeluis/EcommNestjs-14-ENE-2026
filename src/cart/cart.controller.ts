@@ -9,6 +9,8 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
@@ -31,6 +33,7 @@ export class CartController {
     return await this.cartService.addItem(userId, addItemDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get()
   async findOne(@Request() req) {
@@ -39,7 +42,7 @@ export class CartController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('remove-item')
+  @Delete('remove-item/:cartItemId')
   async removeItem(@Param('cartItemId') cartItemId: string, @Request() req) {
     const userId = req.user.id;
     return await this.cartService.removeItem(userId, cartItemId);

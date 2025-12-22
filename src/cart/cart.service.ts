@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import Cart from 'src/database/models/cart.model';
 import { AddItemDto } from './dto/add-item.dto';
 import CartItem from 'src/database/models/cartItem.model';
+import Product from 'src/database/models/product.model';
 
 @Injectable()
 export class CartService {
@@ -42,6 +43,18 @@ export class CartService {
     const [cart] = await this.cartModel.findOrCreate({
       where: { userId },
       defaults: { userId },
+      include: [
+        {
+          model: CartItem,
+          attributes: ['quantity'],
+          include: [
+            {
+              model: Product,
+              attributes: ['id', 'title', 'price'],
+            },
+          ],
+        },
+      ],
     });
 
     return cart;

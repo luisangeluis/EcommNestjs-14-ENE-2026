@@ -52,6 +52,7 @@ export default class CartItem extends Model<
   })
   productId!: string;
 
+  @Default(1)
   @AllowNull(false)
   @Column({
     type: DataType.INTEGER,
