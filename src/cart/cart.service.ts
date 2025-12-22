@@ -43,6 +43,7 @@ export class CartService {
     const [cart] = await this.cartModel.findOrCreate({
       where: { userId },
       defaults: { userId },
+      attributes: ['id'],
       include: [
         {
           model: CartItem,

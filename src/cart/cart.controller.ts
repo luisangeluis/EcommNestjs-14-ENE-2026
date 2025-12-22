@@ -22,6 +22,7 @@ import { ProductExistsPipe } from 'src/products/pipes/product-exists.pipe';
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post('add-item')
   async addItem(
@@ -41,6 +42,7 @@ export class CartController {
     return await this.cartService.findOneByUserId(userId);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete('remove-item/:cartItemId')
   async removeItem(@Param('cartItemId') cartItemId: string, @Request() req) {
@@ -48,7 +50,9 @@ export class CartController {
     return await this.cartService.removeItem(userId, cartItemId);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @Delete()
   async cleanCart(@Request() req) {
     const userId = req.user.id;
 
