@@ -16,7 +16,7 @@ import { CartModule } from './cart/cart.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.dev.env',
+      envFilePath: process.env.NODE_ENV === 'development' ? '.dev.env' : '.env',
       load: [configuration],
     }),
     SequelizeModule.forRootAsync({
