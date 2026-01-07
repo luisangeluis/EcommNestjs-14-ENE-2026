@@ -10,39 +10,43 @@
 
 ### CART
 
-- ### Get /cart
+📌 Get /cart
 
-  Get the user cart. ✅
-  - Auth: true
-  - Params: N/A
-  - Body: N/A
+Get the user cart.
 
-- ### Post /cart/add-item
+- Auth: true
+- Params: N/A
+- Body: N/A
 
-  Add product to cart. ✅
-  - Auth: true
-  - Params: N/A
-  - Body:
-    ```ts
-    productId: string;
-    quantity: number;
-    ```
+📌 Post /cart/add-item
 
-- ### Delete /cart
+Add product to cart.
 
-  Clean the user cart. ✅
-  - Auth: true
-  - Params: N/A
-  - Body: N/A
+- Auth: true
+- Params: N/A
+- Body:
+  ```ts
+  productId: string;
+  quantity: number;
+  ```
 
-- ### Delete /cart/remove-item:cartItemId
+📌 Delete /cart
 
-  Remove a cart item. ✅
-  - Auth: true
-  - Params:
+Clean the user cart.
 
-    ```ts
-    cartItemId: string;
-    ```
+- Auth: true
+- Params: N/A
+- Body: N/A
 
-  - Body: N/A
+📌 Delete /cart/remove-item:cartItemId
+
+Remove a cart item.
+
+- Auth: true
+- Params:
+
+```ts
+cartItemId: string;
+```
+
+- Body: N/A
