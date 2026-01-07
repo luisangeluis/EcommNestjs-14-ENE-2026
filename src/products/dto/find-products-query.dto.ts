@@ -7,13 +7,14 @@ export class FindProductsQueryDto {
     example: 1,
   })
   @IsOptional()
-  @IsNumberString() // solo permite números
-  //   @Min(1)
+  @IsNumberString() // only allow numbers
+  @Min(1)
   page?: string;
 
   @ApiPropertyOptional({
     description: 'Product to search',
     example: 'phone',
+    default: '',
   })
   @IsOptional()
   search?: string;

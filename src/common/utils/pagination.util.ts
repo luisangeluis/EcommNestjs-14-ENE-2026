@@ -7,7 +7,7 @@ export class Pagination {
     this.page = page > 0 ? page : 1;
   }
 
-  get offset() {
+  private get offset() {
     return (this.page - 1) * this.limit;
   }
 
@@ -18,17 +18,14 @@ export class Pagination {
     };
   }
 
-  response(data: any[], total: number) {
+  response(total: number) {
     const totalPages = Math.ceil(total / this.limit);
 
     return {
-      data,
       page: this.page,
       limit: this.limit,
       total,
       totalPages,
-      hasPrevPage: this.page > 1,
-      hasNextPage: this.page < totalPages,
     };
   }
 }

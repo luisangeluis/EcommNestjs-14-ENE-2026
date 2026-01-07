@@ -51,11 +51,14 @@ export class ProductsService {
     const { rows, count } = await this.productModel.findAndCountAll({
       ...pagination.options,
       where,
-      order: [['createdAt', 'DESC']], // optioal
+      order: [['createdAt', 'DESC']], // optional
       include: ['categories'],
     });
 
-    return pagination.response(rows, count);
+    return {
+      ...pagination.response(count),
+      rows,
+    };
   }
 
   async findMyProducts(userId: string) {
