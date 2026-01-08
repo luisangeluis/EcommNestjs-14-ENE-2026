@@ -37,7 +37,7 @@ export class ProductsService {
     });
   }
 
-  async findAll(page: number = 1, search?: string, limit: number = 20) {
+  async findAll(page: number = 1, search: string = '', limit: number = 20) {
     const pagination = new Pagination(limit, page);
     const where: any = {};
 
