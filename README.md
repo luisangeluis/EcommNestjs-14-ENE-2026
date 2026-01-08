@@ -2,53 +2,55 @@
 
 ---
 
-## **DESCRIPTIÓN.**
+## 📌 **DESCRIPTIÓN.**
 
 Main suffix: **"/v1"**
 
-## **ENDPOINTS**
+## 📌 **ENDPOINTS**
 
 ### **CART**
 
-### 🔹**GET** /cart
+### ⚪ **GET** /cart
 
-Get user cart.
+- **Description**: Get user cart. 📝
+  - Method: GET
+  - Route: /cart
+  - Auth: true
+  - Params: N/A
+  - Body: N/A
 
-- Method: GET
-  -Route:
-- Auth: true
-- Params: N/A
-- Body: N/A
+### ⚪ **POST** /cart/add-item
 
-### 🔹**POST** /cart/add-item
-
-Add product to cart.
-
-- Auth: true
-- Params: N/A
-- Body:
+- **Description**: Add product to cart. 📝
+  - Method: POST
+  - Route: /cart/add-item
+  - Auth: true
+  - Params: N/A
+  - Body:
   ```ts
   productId: string;
   quantity: number;
   ```
 
-📌 Delete /cart
+### ⚪ **DELETE** /cart
 
-Clean the user cart.
+- **Description**: Clean the user cart. 📝
+  - Method: DELETE
+  - Route: /cart
+  - Auth: true
+  - Params: N/A
+  - Body: N/A
 
-- Auth: true
-- Params: N/A
-- Body: N/A
+### ⚪ **DELETE** /cart/remove-item:cartItemId
 
-📌 Delete /cart/remove-item:cartItemId
+- **Description**: Remove a cart item. 📝
+  - Method: DELETE
+  - Route: /cart/remove-item:cartItemId
+  - Auth: true
+  - Params:
 
-Remove a cart item.
+  ```ts
+  cartItemId: string;
+  ```
 
-- Auth: true
-- Params:
-
-```ts
-cartItemId: string;
-```
-
-- Body: N/A
+  - Body: N/A
