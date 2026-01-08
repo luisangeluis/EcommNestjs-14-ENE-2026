@@ -2,23 +2,25 @@
 
 ---
 
-## DESCRIPTIÓN.
+## **DESCRIPTIÓN.**
 
-**Main suffix: "/v1"**
+Main suffix: **"/v1"**
 
-## ENDPOINTS
+## **ENDPOINTS**
 
-### CART
+### **CART**
 
-📌 Get /cart
+### 🔹**GET** /cart
 
-Get the user cart.
+Get user cart.
 
+- Method: GET
+  -Route:
 - Auth: true
 - Params: N/A
 - Body: N/A
 
-📌 Post /cart/add-item
+### 🔹**POST** /cart/add-item
 
 Add product to cart.
 
