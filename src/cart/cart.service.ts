@@ -14,6 +14,7 @@ export class CartService {
     @InjectModel(CartItem) private readonly cartItemModel: typeof CartItem,
   ) {}
 
+  //Add product to Cart
   async addItem(userId: string, addItemDto: AddItemDto) {
     const { productId, quantity } = addItemDto;
 
@@ -39,6 +40,7 @@ export class CartService {
     });
   }
 
+  //Find userCart
   async findOneByUserId(userId: string) {
     const [cart] = await this.cartModel.findOrCreate({
       where: { userId },
