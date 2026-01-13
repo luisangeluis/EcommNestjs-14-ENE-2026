@@ -13,11 +13,13 @@ describe('CartService', () => {
 
   const mockCartModel = {
     findOrCreate: jest.fn(),
+    findOne: jest.fn(),
   };
 
   const mockCartItemModel = {
     findOne: jest.fn(),
     create: jest.fn(),
+    destroy: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -54,7 +56,7 @@ describe('CartService', () => {
       const addItemDto: AddItemDto = { productId: 'product-id', quantity: 2 };
 
       cartModel.findOrCreate.mockResolvedValue([
-        { cart: { id: 'cart-id', userId, isActive: false } },
+        { id: 'cart-id', userId, isActive: false },
         false,
       ]);
 
@@ -96,18 +98,20 @@ describe('CartService', () => {
       const cartId = 'cart-id';
       const productId = 'product-id';
       const dto: AddItemDto = { productId, quantity: 5 };
-
-      cartModel.findOrCreate.mockResolvedValue([
-        { cart: { id: 'cart-id', userId, isActive: false } },
-        false,
-      ]);
-
-      const cartItem = cartItemModel.findOne.mockResolvedValue({
+      const mockCart = { id: 'cart-id', userId, isActive: false };
+      const mockCartItem = {
         id: 'cartItem-id',
         cartId,
         productId,
         quantity: 2,
-      });
+        save: jest.fn(),
+      };
+
+      cartModel.findOrCreate.mockResolvedValue([mockCart, false]);
+
+      cartItemModel.findOne.mockResolvedValue(mockCartItem);
+
+      const createSpy = jest.spyOn(cartItemModel, 'create');
 
       const result = await service.addItem(userId, dto);
 
@@ -115,9 +119,57 @@ describe('CartService', () => {
         expect.objectContaining({ where: { userId } }),
       );
 
-      expect(cartItemModel).toHaveBeenCalledWith(
+      expect(cartItemModel.findOne).toHaveBeenCalledWith(
         expect.objectContaining({ where: { cartId, productId } }),
       );
+
+      expect(mockCartItem.quantity).toBe(5);
+      expect(mockCartItem.save).toHaveBeenCalled();
+
+      expect(createSpy).not.toHaveBeenCalled();
+
+      expect(result).toBe(mockCartItem);
+    });
+  });
+
+  describe('clean-cart', () => {
+    it('should return the number of deleted records', async () => {
+      const userId = 'user-id';
+      const cartId = 'cart-id';
+      const mockCart = { id: 'cart-id', userId, isActive: false };
+
+      cartModel.findOne.mockResolvedValue(mockCart);
+
+      cartItemModel.destroy.mockResolvedValue(3);
+
+      const result = await service.cleanCart(userId);
+
+      expect(cartModel.findOne).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { userId } }),
+      );
+
+      expect(cartItemModel.destroy).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { cartId } }),
+      );
+
+      expect(result).toEqual(3);
+    });
+
+    it("should return 0 when cart doesn't exist", async () => {
+      const userId = 'user-id';
+
+      cartModel.findOne.mockResolvedValue(null);
+
+      const createSpy = jest.spyOn(cartItemModel, 'destroy');
+
+      const result = await service.cleanCart(userId);
+
+      expect(cartModel.findOne).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { userId } }),
+      );
+
+      expect(createSpy).not.toHaveBeenCalled();
+      expect(result).toEqual(0);
     });
   });
 });
