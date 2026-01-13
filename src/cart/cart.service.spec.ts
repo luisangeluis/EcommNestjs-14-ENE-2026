@@ -54,7 +54,7 @@ describe('CartService', () => {
       const addItemDto: AddItemDto = { productId: 'product-id', quantity: 2 };
 
       cartModel.findOrCreate.mockResolvedValue([
-        { cart: { id: 'cart-id', userId: 'user-id', isActive: false } },
+        { cart: { id: 'cart-id', userId, isActive: false } },
         false,
       ]);
 
@@ -89,6 +89,35 @@ describe('CartService', () => {
         productId: addItemDto.productId,
         quantity: addItemDto.quantity,
       });
+    });
+
+    it('Should change properity quantity if cartItem exists', async () => {
+      const userId = 'user-id';
+      const cartId = 'cart-id';
+      const productId = 'product-id';
+      const dto: AddItemDto = { productId, quantity: 5 };
+
+      cartModel.findOrCreate.mockResolvedValue([
+        { cart: { id: 'cart-id', userId, isActive: false } },
+        false,
+      ]);
+
+      const cartItem = cartItemModel.findOne.mockResolvedValue({
+        id: 'cartItem-id',
+        cartId,
+        productId,
+        quantity: 2,
+      });
+
+      const result = await service.addItem(userId, dto);
+
+      expect(cartModel.findOrCreate).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { userId } }),
+      );
+
+      expect(cartItemModel).toHaveBeenCalledWith(
+        expect.objectContaining({ where: { cartId, productId } }),
+      );
     });
   });
 });

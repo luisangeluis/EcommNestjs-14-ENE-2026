@@ -28,6 +28,7 @@ export class CartService {
 
     if (cartItem) {
       cartItem.quantity = quantity;
+
       await cartItem.save();
 
       return cartItem;
