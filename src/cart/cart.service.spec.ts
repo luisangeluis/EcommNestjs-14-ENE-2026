@@ -5,6 +5,8 @@ import Cart from 'src/database/models/cart.model';
 import CartItem from 'src/database/models/cartItem.model';
 import { AddItemDto } from './dto/add-item.dto';
 import { where } from 'sequelize';
+import { log } from 'console';
+import { NotFoundException } from '@nestjs/common';
 
 describe('CartService', () => {
   let service: CartService;
@@ -129,6 +131,43 @@ describe('CartService', () => {
       expect(createSpy).not.toHaveBeenCalled();
 
       expect(result).toBe(mockCartItem);
+    });
+  });
+
+  describe('remove-item', () => {
+    it('Should be delete an item from cart', async () => {
+      const userId = 'user-id';
+      const cartItemId = 'cart-item-id';
+      const mockCartItem = {
+        id: 'cart-item-id',
+        cartId: 'cart-id',
+        productId: 'product-id',
+        quantity: 2,
+        destroy: jest.fn(),
+      };
+
+      cartItemModel.findOne.mockResolvedValue(mockCartItem);
+
+      const result = await service.removeItem(userId, cartItemId);
+
+      expect(mockCartItem.destroy).toHaveBeenCalled();
+
+      expect(result).toEqual({ message: 'Item removed from cart' });
+    });
+
+    it("Should thrown a NotFoundException when cartItem doesn't exist", async () => {
+      const userId = 'user-id';
+      const cartItemId = 'cart-item-id';
+
+      cartItemModel.findOne.mockResolvedValue(null);
+
+      await expect(service.removeItem(userId, cartItemId)).rejects.toThrow(
+        NotFoundException,
+      );
+
+      await expect(service.removeItem(userId, cartItemId)).rejects.toThrow(
+        'Item not found in your cart',
+      );
     });
   });
 
