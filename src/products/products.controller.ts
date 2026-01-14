@@ -39,6 +39,7 @@ export class ProductsController {
   @Get()
   async findAll(@Query() query: FindProductsQueryDto) {
     const page = query.page ? Number(query.page) : 1;
+    console.log({ page });
     const limit = 20;
     return await this.productsService.findAll(
       Number(page),

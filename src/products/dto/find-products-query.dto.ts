@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsNumberString, IsOptional, Min } from 'class-validator';
 
 export class FindProductsQueryDto {
@@ -7,9 +8,9 @@ export class FindProductsQueryDto {
     example: 1,
   })
   @IsOptional()
-  @IsNumberString() // only allow numbers
+  @Type(() => Number)
   @Min(1)
-  page?: string;
+  page: number;
 
   @ApiPropertyOptional({
     description: 'Product to search',
