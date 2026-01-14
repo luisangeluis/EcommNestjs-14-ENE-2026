@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
