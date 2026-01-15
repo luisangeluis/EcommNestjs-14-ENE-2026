@@ -8,9 +8,9 @@ Main suffix: **"/v1"**
 
 ## 📌 **ENDPOINTS**
 
-### **CART**
+### - 🔵 **CART**
 
-### ⚪ **GET** /cart
+#### ⚪ **GET** /cart
 
 - **Description**: Get user cart. 📝
   - Method: GET
@@ -19,7 +19,7 @@ Main suffix: **"/v1"**
   - Params: N/A
   - Body: N/A
 
-### ⚪ **POST** /cart/add-item
+#### ⚪ **POST** /cart/add-item
 
 - **Description**: Add product to cart. 📝
   - Method: POST
@@ -32,7 +32,7 @@ Main suffix: **"/v1"**
   quantity: number;
   ```
 
-### ⚪ **DELETE** /cart
+#### ⚪ **DELETE** /cart
 
 - **Description**: Clean the user cart. 📝
   - Method: DELETE
@@ -41,7 +41,7 @@ Main suffix: **"/v1"**
   - Params: N/A
   - Body: N/A
 
-### ⚪ **DELETE** /cart/remove-item:cartItemId
+#### ⚪ **DELETE** /cart/remove-item/:cartItemId
 
 - **Description**: Remove a cart item. 📝
   - Method: DELETE
@@ -54,3 +54,19 @@ Main suffix: **"/v1"**
   ```
 
   - Body: N/A
+
+### - 🔵 **Products**
+
+#### ⚪ **GET** /products
+
+- **Description**: Get all products. 📝
+  - Method: GET
+  - Route: /products
+  - Auth: false
+  - Params: N/A
+  - Query:
+
+  ```ts
+   page?:number
+   search?:string
+  ```
